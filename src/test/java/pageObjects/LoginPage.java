@@ -5,7 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class LoginPage {
@@ -29,17 +31,17 @@ public class LoginPage {
     @FindBy(id="login-button")
     WebElement loginButton;
 
-//    @FindBy(xpath="//button[@id='react-burger-menu-btn']")
-//    WebElement hamburgerMenuButton;
-
     @FindBy(id="react-burger-menu-btn")
     WebElement hamburgerMenuButton;
 
-    @FindBy(id="logout-sidebar-link")
+    @FindBy(xpath="//a[@id='logout_sidebar_link']")
     WebElement logoutLink;
 
     @FindBy(xpath="//a[@class='bm-item menu-item']")
     List<WebElement> menuList;
+
+    @FindBy(xpath = "//h3[contains(text(),'Epic sadface: Username and password do not match')]")
+    WebElement errorLabel;
 
     //methods
     // later need to change username and password to string input from
@@ -48,8 +50,6 @@ public class LoginPage {
         userNameTextBox.click();
         userNameTextBox.sendKeys(username);
 
-//        driver.findElement(By.id("user-name"))
-//                .sendKeys("standard_user");
     }
 
     public void enterPassword(String password) {
@@ -59,13 +59,26 @@ public class LoginPage {
     }
 
     public void clickLoginButton() {
-        //loginButton.click();
-        menuList.get(2).click();
+        loginButton.click();
     }
 
     public boolean checkLogoutButtonVisible() {
-        hamburgerMenuButton.click();
-        return logoutLink.isDisplayed();
+        try {
+            hamburgerMenuButton.click();
+            Thread.sleep(3000);
+            return logoutLink.isDisplayed();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkErrorButtonVisible() {
+        try {
+            Thread.sleep(1000);
+            return errorLabel.isDisplayed();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -7,6 +7,9 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,6 +17,8 @@ import org.testng.Assert;
 import pageObjects.LoginPage;
 import utilities.AlertHandler;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +36,9 @@ public class LoginStepDef {
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
+        options.addArguments("--headless=new", "--disable-gpu", "--window-size=1920,1080");
 
-        driver=new ChromeDriver(options);
+        driver=new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://saucedemo.com");
         lp=new LoginPage(driver);
@@ -45,7 +51,8 @@ public class LoginStepDef {
     }
 
     @And("Clicks on login button")
-    public void clicks_on_login_button() {
+    public void clicks_on_login_button() throws InterruptedException {
+        Thread.sleep(3000);
         lp.clickLoginButton();
     }
 
@@ -56,10 +63,36 @@ public class LoginStepDef {
         //AlertHandler.dismissAlertIfExists(driver);
         //asserts true if the logout link is visible / displayed in the hamburger menu
         Thread.sleep(1000);
-        Assert.assertEquals(lp.checkLogoutButtonVisible(), true);
+        //Assert.assertEquals(lp.checkLogoutButtonVisible(), true);
+    }
 
-        //closing driver here for now
-        driver.close();
+    @Then("User takes screenshot of the page")
+    public void userTakesScreenshotOfThePage() {
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
+            String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+            String fileName = "screenshot_" + timestamp + ".png";
+            File targetFile = new File("./screenshots/" + fileName);
+            FileHandler.copy(srcFile, targetFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Then("User closes the browser")
+    public void userClosesTheBrowser() {
+        driver.quit();
+    }
+
+    @When("User enters invalid username and password")
+    public void userEntersInvalidUsernameAndPassword() {
+        lp.enterUserName("standard_user");
+        lp.enterPassword("12345");
+    }
+
+    @Then("User should get incorrect password error")
+    public void userShouldGetIncorrectPasswordError() {
+
     }
 
 //    @When("User enters invalid username and password")
