@@ -10,14 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class LoginPage {
+public class LoginPage extends BaseClass {
     WebDriver driver;
 
-    //constructor
 
     public LoginPage (WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     //locators
