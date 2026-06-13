@@ -4,7 +4,7 @@ Feature: Login Page Automation of SwagLabs App
     When  User enters valid username and password
     And   Clicks on login button
     Then  User should be landed on the homepage
-    Then  User takes screenshot of the page
+#    Then  User takes screenshot of the page
 
 
   Scenario: Check login is unsuccessful with incorrect password
@@ -12,11 +12,11 @@ Feature: Login Page Automation of SwagLabs App
     When  User enters invalid username and password
     And   Clicks on login button
     Then  User should get incorrect password error
-    Then  User takes screenshot of the page
+#    Then  User takes screenshot of the page
 
   Scenario: Check login is unsuccessful with incorrect email
     Given User is on the login page
     When  User enters invalid email but valid password
     And   Clicks on login button
     Then  User should get incorrect password error
-    Then  User takes screenshot of the page
+#    Then  User takes screenshot of the page

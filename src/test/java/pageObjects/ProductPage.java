@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 
-public class ProductPage extends BaseClass {
+public class ProductPage extends BasePage {
 
     public ProductPage(WebDriver driver) {
         super(driver);
@@ -16,6 +16,10 @@ public class ProductPage extends BaseClass {
     @FindBy(xpath = "//div[@class='inventory_details_name large_size']")
     @CacheLookup
     WebElement productTitle;
+
+    @FindBy(xpath = "//button[@id='add-to-cart']")
+    @CacheLookup
+    WebElement addToCartButton;
 
     @FindBy(xpath = "//button[@id='remove']")
     @CacheLookup
@@ -31,6 +35,10 @@ public class ProductPage extends BaseClass {
 
     public boolean verifyProductTitle(String product) {
         return productTitle.getText().equals(product);
+    }
+
+    public void addProductToCart(){
+        addToCartButton.click();
     }
 
     public void clickOnRemoveItemFromCartButton(){

@@ -12,32 +12,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pageObjects.LoginPage;
+import utilities.BaseClass;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginStepDefs {
+public class LoginStepDefs extends BaseClass {
 
-    public WebDriver driver;
-    public LoginPage lp;
 
     @Given("User is on the login page")
     public void user_is_on_the_login_page() {
-        Map<String, Object> prefs = new HashMap<>();
-        prefs.put("profile.password_manager_leak_detection", false);
-        prefs.put("credentials_enable_service", false);
-        prefs.put("profile.password_manager_enabled", false);
-
-        ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("prefs", prefs);
-        options.addArguments("--headless=new", "--disable-gpu", "--window-size=1920,1080");
-
-        driver=new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://saucedemo.com");
-        lp=new LoginPage(driver);
+        driver.get("https://www.saucedemo.com");
     }
 
     @When("User enters valid username and password")
