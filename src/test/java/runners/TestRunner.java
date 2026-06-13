@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(features = "src/test/resources/features",
         glue = {"StepDefinitions"},
-        plugin = {"pretty", "html:target/cucumber-reports", "json:target/cucumber.json"},
+        plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/cucumber.json"},
         monochrome = true,
         publish = true)
 

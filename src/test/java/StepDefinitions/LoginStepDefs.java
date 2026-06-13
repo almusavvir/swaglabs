@@ -1,8 +1,5 @@
 package StepDefinitions;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -13,16 +10,14 @@ import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.Assert;
 import pageObjects.LoginPage;
-import utilities.AlertHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginStepDef {
+public class LoginStepDefs {
 
     public WebDriver driver;
     public LoginPage lp;
@@ -66,19 +61,6 @@ public class LoginStepDef {
         //Assert.assertEquals(lp.checkLogoutButtonVisible(), true);
     }
 
-    @Then("User takes screenshot of the page")
-    public void userTakesScreenshotOfThePage() {
-        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        try {
-            String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
-            String fileName = "screenshot_" + timestamp + ".png";
-            File targetFile = new File("./screenshots/" + fileName);
-            FileHandler.copy(srcFile, targetFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Then("User closes the browser")
     public void userClosesTheBrowser() {
         driver.quit();
@@ -90,10 +72,18 @@ public class LoginStepDef {
         lp.enterPassword("12345");
     }
 
+    @When("User enters invalid email but valid password")
+    public void userEntersInvalidEmailButValidPassword() {
+        lp.enterUserName("ghost_sauce");
+        lp.enterPassword("secret_sauce");
+    }
+
     @Then("User should get incorrect password error")
     public void userShouldGetIncorrectPasswordError() {
 
     }
+
+
 
 //    @When("User enters invalid username and password")
 //    public void userEntersInvalidUsernameAndPassword() {
