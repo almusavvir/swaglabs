@@ -15,3 +15,10 @@ Feature: Login Page Automation of SwagLabs App
     And   Clicks on login button
     Then  User should get incorrect password error
     Then  User takes screenshot of the page
+
+  Scenario: Check login is unsuccessful with incorrect email
+    Given User is on the login page
+    When  User enters invalid email but valid password
+    And   Clicks on login button
+    Then  User should get incorrect password error
+    Then  User takes screenshot of the page
