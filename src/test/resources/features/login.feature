@@ -1,9 +1,7 @@
 Feature: Login Page Automation of SwagLabs App
   Scenario: Check login is successful with valid credentials
     Given User is on the login page
-    Then  User takes screenshot of the page
     When  User enters valid username and password
-    Then  User takes screenshot of the page
     And   Clicks on login button
     Then  User should be landed on the homepage
     Then  User takes screenshot of the page

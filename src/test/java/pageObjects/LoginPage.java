@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.util.List;
 
 public class LoginPage extends BaseClass {
-    WebDriver driver;
+    //WebDriver driver;
 
 
     public LoginPage (WebDriver driver) {
